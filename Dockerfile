@@ -26,30 +26,12 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . /var/www/html
 
-# Install PHP dependencies
-RUN composer install --optimize-autoloader --no-dev
-
-# Change Apache DocumentRoot to /var/www/html/public
-RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy all files
-COPY . /var/www/html
+# Clear Composer cache and install dependencies
+RUN composer clear-cache && composer install --optimize-autoloader --no-dev
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-
-# Set permissions for storage and cache
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
-
-# Set file permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Expose port 80
 EXPOSE 80
