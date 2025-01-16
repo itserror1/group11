@@ -1,6 +1,6 @@
 services:
    type: web
-    name: laravel-app
+    name: project1
     runtime: php
    repo: https://github.com/itserror1/group11.git
     branch: main
