@@ -29,6 +29,11 @@ COPY . /var/www/html
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 
+# Set permissions for storage and cache
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+
 # Set file permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
