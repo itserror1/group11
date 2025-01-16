@@ -1,7 +1,6 @@
-# Use PHP 8.2 with Apache
-FROM php:8.1-apache
+FROM php:8.2-apache
 
-# Install system dependencies
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -26,15 +25,15 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . /var/www/html
 
-# Clear Composer cache and install dependencies
-RUN composer clear-cache && composer install --optimize-autoloader --no-dev
-
-# Set permissions
+# Set correct permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Install dependencies
+RUN composer install --optimize-autoloader --no-dev
 
 # Expose port 80
 EXPOSE 80
 
-# Start Apache server
+# Start Apache
 CMD ["apache2-foreground"]
