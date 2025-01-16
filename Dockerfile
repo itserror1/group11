@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip
 
+    # Set ServerName to avoid Apache warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
