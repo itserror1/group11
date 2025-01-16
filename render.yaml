@@ -2,7 +2,7 @@ services:
   - type: web
     name: laravel-app
     runtime: php
-    https://github.com/itserror1/group11.git
+   repo: https://github.com/itserror1/group11.git
     branch: main
     buildCommand: |
       composer install --optimize-autoloader --no-dev
